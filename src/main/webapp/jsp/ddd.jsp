@@ -4,7 +4,7 @@
 <head>
 
 <meta charset="UTF-8">
-<title>Insert 아아2 here</title>
+<title>Insert 테스트</title>
 </head>
 <script type="text/javascript">
 
