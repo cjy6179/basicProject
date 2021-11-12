@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Enumeration;
+import java.util.logging.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,8 +16,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import Database.DatabaseConnetion;
 import common.vo.test.PersonVO;
+import database.DatabaseConnetion;
+import logger.FirstLogger;
 
 /**
  * Servlet implementation class LoginServlet
@@ -24,6 +26,8 @@ import common.vo.test.PersonVO;
 //@WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+
+	FirstLogger logger = FirstLogger.getLogger();
 
     /**
      * Default constructor. 
@@ -79,6 +83,7 @@ public class LoginServlet extends HttpServlet {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			logger.log(e.getMessage());
 			state="error";
 		} finally{
             try{

@@ -1,4 +1,4 @@
-package Database;
+package database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,10 +11,12 @@ import javax.servlet.ServletContext;
 
 import config.CustomServletContextListener;
 import config.LoadProperties;
+import logger.FirstLogger;
 
 public class DatabaseConnetion {
 	
-	final static Properties p1 = LoadProperties.getProperties();
+	final static Properties properties = LoadProperties.getProperties();
+	FirstLogger logger = FirstLogger.getLogger();
 	
 	public Connection getDBConnenction(ServletContext servletContext) {
 		return dbConnenction(servletContext);
@@ -22,14 +24,15 @@ public class DatabaseConnetion {
 	
 	private Connection dbConnenction(ServletContext servletContext) {
 		
-		String JDBC_DRIVER = p1.getProperty("driver");
-		String DB_URL = p1.getProperty("url");
-		String USERNAME = p1.getProperty("username");
-		String PASSWORD = p1.getProperty("password");
+		String JDBC_DRIVER = properties.getProperty("driver");
+		String DB_URL = properties.getProperty("url");
+		String USERNAME = properties.getProperty("username");
+		String PASSWORD = properties.getProperty("password");
 		
 		// MySql에 사용하는여러 객체를 만들어줍니다. 
 		Connection conn = null; 
 
+		logger.log("ggg");
 		System.out.print("User Table 접속 : "); 
 		try { 
 			Class.forName(JDBC_DRIVER); 
@@ -43,6 +46,7 @@ public class DatabaseConnetion {
 				System.out.println("실패");
 			} 
 		} catch (ClassNotFoundException e) { 
+			logger.log(e.getMessage());
 			System.out.println("Class Not Found Exection"); 
 			e.printStackTrace(); 
 		} catch (SQLException e) { 
