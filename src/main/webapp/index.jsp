@@ -3,6 +3,15 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="./css/bootstrap/bootstrap.min.css">
+<link rel="stylesheet" href="./css/bootstrap/signin.css">
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="./js/bootstrap/bootstrap.min.js"></script>
+
+
 <meta charset="UTF-8">
 <title>login</title>
 </head>
@@ -22,6 +31,15 @@ window.onload = function(){
 	}
 }
 
+function enterkey() {
+    if (window.event.keyCode == 13) {
+
+         // 엔터키가 눌렸을 때 실행할 내용
+         fnlogin();
+    }
+}
+
+
 function fnCreateUser(){
 	var url = "jsp/user/createUser.jsp";
     var name = "popup test";
@@ -40,12 +58,20 @@ function fnlogin(){
 </script>
 
 <body>
-	<h1> 로그인 </h1>
-	<form id="loginFrom">
-		<input type="text" id="id" name="id" value="test1"/>
-		<input type="text" id="pwd" name="pwd" value="123"/>
-		<input type="button" value="로그인" onClick="fnlogin()">
-		<input type="button" id="createUser" value="회원가입" onClick="fnCreateUser()"/>
+<div class="container">
+	<form class="form-signin" id="loginFrom">
+		<h2 class="form-signin-heading">Please sign in</h2>
+		<label for="id" class="sr-only">ID</label>
+		<input type="text" id="id" name="id" class="form-control" placeholder="ID input"/>
+		<label for="pwd" class="sr-only">PASSWORD</label>
+		<input type="password" id="pwd" name="pwd" class="form-control" placeholder="password input" onkeyup="enterkey();"/>
+		
+		<input type="button" class="btn btn-lg btn-primary btn-block" value="Sign in" onClick="fnlogin()">
+		<input type="button" class="btn btn-lg btn-primary btn-block" id="createUser" value="Registration" onClick="fnCreateUser()"/>
 	</form>
+</div>
+ 
+
+
 </body>
 </html>

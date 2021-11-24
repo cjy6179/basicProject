@@ -18,11 +18,11 @@ public class DatabaseConnetion {
 	final static Properties properties = LoadProperties.getProperties();
 	FirstLogger logger = FirstLogger.getLogger();
 	
-	public Connection getDBConnenction(ServletContext servletContext) {
-		return dbConnenction(servletContext);
+	public Connection getDBConnenction() {
+		return dbConnenction();
 	}
 	
-	private Connection dbConnenction(ServletContext servletContext) {
+	private Connection dbConnenction() {
 		
 		String JDBC_DRIVER = properties.getProperty("driver");
 		String DB_URL = properties.getProperty("url");

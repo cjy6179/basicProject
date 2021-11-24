@@ -1,11 +1,12 @@
-package common;
+package common.user;
 
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,20 +14,24 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import database.DatabaseConnetion;
+import logger.FirstLogger;
 
 /**
- * Servlet implementation class CreateUserInfoServlet
+ * Servlet implementation class SelectUserInfoServlet
  */
-//@WebServlet("/CreateUserInfoServlet")
-public class CreateUserInfoServlet extends HttpServlet {
+@WebServlet("/SelectUserInfoServlet")
+public class SelectUserInfoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
+	FirstLogger logger = FirstLogger.getLogger();
+	
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CreateUserInfoServlet() {
+    public SelectUserInfoServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,45 +41,44 @@ public class CreateUserInfoServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		response.setContentType("text/html;charset=UTF-8");
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 		
-		System.out.println("param" + request.getParameter("id"));
-
-		DatabaseConnetion dbInfo = new DatabaseConnetion();
+		DatabaseConnetion database = new DatabaseConnetion();
+		Connection conn = database.getDBConnenction();
 		
-		Connection conn = dbInfo.getDBConnenction(request.getServletContext());
+		String sql = "SELECT @rownum:=@rownum+1, id, name, age, gender FROM T_USER_MST b, (SELECT @ROWNUM:=0) R ";
+		
 		PreparedStatement pstmt = null;
-		String state = "U";
-		String id = request.getParameter("id");
-		String name = request.getParameter("name");
-		String age = request.getParameter("age");
-		String gender = request.getParameter("gender");
-		String pwd = request.getParameter("pwd");
+		ResultSet rs = null;
+		int count = 0;
+		
+		List<UserInfoVO> userInfoList = new ArrayList<UserInfoVO>();
+				
 				
 		try {
 			
-			String sql =  "insert into T_USER_MST(id, name, age, gender, password) values(?, ?, ?, ?, ?)";
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setString(1, id);
-			pstmt.setString(2, name);
-			pstmt.setString(3, age);
-			pstmt.setString(4, gender);
-			pstmt.setString(5, pwd);
+			rs = pstmt.executeQuery();
 			
-			int count = pstmt.executeUpdate();
+			while( rs.next() ){
+				UserInfoVO userInfoVo = new UserInfoVO();
+				
+				userInfoVo.setIndex(rs.getInt(1));
+				userInfoVo.setId(rs.getString(2));
+				userInfoVo.setName(rs.getString(3));
+				userInfoVo.setAge(rs.getString(4));
+				userInfoVo.setGender(rs.getString(5));
+				
+				userInfoList.add(userInfoVo);
+				count++;
+			}
 			
-			if( count == 0 ){
-                System.out.println("데이터 입력 실패");
-            }
-            else{
-                System.out.println("데이터 입력 성공");
-            }
-
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			state = "Error";
 			e.printStackTrace();
-			System.out.println("1");
+			logger.log(e.getMessage());
 		} finally{
             try{
                 if( conn != null && !conn.isClosed()){
@@ -82,24 +86,22 @@ public class CreateUserInfoServlet extends HttpServlet {
                 }
                 if( pstmt != null && !pstmt.isClosed()){
                     pstmt.close();
+                }if( rs != null && !rs.isClosed()){
+                    rs.close();
                 }
             }
             catch( SQLException e){
-            	System.out.println("2");
                 e.printStackTrace();
-                state = "Error";
             }
         }
 		
-		request.setAttribute("state", state);
-		request.setAttribute("id", id);
-		request.setAttribute("name", name);
-		request.setAttribute("age", age);
-		request.setAttribute("gender", gender);
-		
-		RequestDispatcher view = request.getRequestDispatcher("/jsp/user/createUser.jsp");
-		
+		String dipatcherSource = "/jsp/user/userInfoList.jsp";    
+		request.setAttribute("userInfoList", userInfoList);
+		RequestDispatcher view = request.getRequestDispatcher(dipatcherSource);
+	
 		view.forward(request, response);
+		
+		
 	}
 
 	/**

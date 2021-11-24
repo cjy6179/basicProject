@@ -6,26 +6,14 @@
 <meta charset="UTF-8">
 <title>Insert 테스트</title>
 </head>
-<script type="text/javascript">
-
-
-
-
-</script>
 <body>
-<h1> account book 아..ㅋㅋ </h1>
-<table>
-	<tr>
-		<th>id</th>
-		<td>
 <%
-out.print("<br> id : " + request.getParameter("id"));
-%>  </td>
-	</tr>
-	<tr>
-		<th>pwd</th>
-		<td> <%request.getParameter("pwd"); %> </td>
-	</tr>
-</table>
+
+String test = (String) request.getAttribute("menuUrl");
+out.print(test);
+%>
+
+<jsp:forward page="/jsp/main.jsp"></jsp:forward>
+
 </body>
 </html>

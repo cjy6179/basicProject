@@ -16,12 +16,30 @@
 
      <servlet>
         <servlet-name>CreateUserInfoServlet</servlet-name>
-        <servlet-class>common.CreateUserInfoServlet</servlet-class>
+        <servlet-class>common.user.CreateUserInfoServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>CreateUserInfoServlet</servlet-name>
         <url-pattern>/createUserInfo</url-pattern>
     </servlet-mapping>  
+    
+    <servlet>
+        <servlet-name>SelectUserInfoServlet</servlet-name>
+        <servlet-class>common.user.SelectUserInfoServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SelectUserInfoServlet</servlet-name>
+        <url-pattern>/selectUserInfo</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>MenuMoveServlet</servlet-name>
+        <servlet-class>common.MenuMoveServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>MenuMoveServlet</servlet-name>
+        <url-pattern>/menuMove</url-pattern>
+    </servlet-mapping>
     
     <listener>
     	<listener-class>

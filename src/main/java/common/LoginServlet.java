@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.logging.Logger;
 
 import javax.servlet.RequestDispatcher;
@@ -15,6 +16,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import common.vo.test.PersonVO;
 import database.DatabaseConnetion;
@@ -53,7 +55,7 @@ public class LoginServlet extends HttpServlet {
 		
 		DatabaseConnetion dbInfo = new DatabaseConnetion();
 		
-		Connection conn = dbInfo.getDBConnenction(request.getServletContext());
+		Connection conn = dbInfo.getDBConnenction();
 		
 		String sql = "SELECT id, name, age, gender FROM T_USER_MST WHERE id = ? AND password =?"; 
 	
@@ -101,19 +103,25 @@ public class LoginServlet extends HttpServlet {
             }
         }
 
-		String dipatcherSource="jsp/main.jsp";
+		String dipatcherSource="jsp/ddd.jsp";
 		
 		if(count <= 0) {
 			state="F";
-			dipatcherSource="index.jsp";
+			response.sendRedirect("index.jsp");
+		}else {
+			
+			HttpSession httpSession = request.getSession();
+			httpSession.setAttribute("person", person);
+		    
+			
+			request.setAttribute("menuUrl", "/jsp/user/userInfoList.jsp");
+			request.setAttribute("person", person);
+			request.setAttribute("state", state);
+			RequestDispatcher view = request.getRequestDispatcher(dipatcherSource);
+		
+			view.forward(request, response);
 		}
-		
-		request.setAttribute("person", person);
-		request.setAttribute("state", state);
-		RequestDispatcher view = request.getRequestDispatcher(dipatcherSource);
-	
-		view.forward(request, response);
-		
+
 	}
 
 

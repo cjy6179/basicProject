@@ -2,28 +2,33 @@
     pageEncoding="UTF-8"%>
 <%@ page import="common.vo.test.PersonVO" %>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+
+
 <meta charset="UTF-8">
-<title>메인페이지</title>
+<title>Account Book</title>
 </head>
-<body>
-
-<jsp:useBean id="person" class="common.vo.test.PersonVO" scope="request"/>
-<jsp:setProperty name="person" property="*" />
-
-<h1><%= person.getId() %> </h1>
-<h1><%= person.getName() %> </h1>
-<h1><%= person.getAge() %> </h1>
-<h1><%= person.getGender() %> </h1>
+ <body>
 
 <%
-PersonVO test = (PersonVO) request.getAttribute("person");
-out.println(test.getId());
-out.println(test.getAge());
-out.println(test.getName());
-out.println(test.getGender());
+PersonVO test2 = (PersonVO)session.getAttribute("person");
+String menuUrl = (String) request.getAttribute("menuUrl");
 %>
 
+<!-- Fixed navbar -->
+<jsp:include page="top.jsp" flush="false" />
+
+<%-- 
+<div class="container theme-showcase" >
+	<jsp:include page='<%= menuUrl%>' flush="false"/>
+</div> 
+--%>
+<script>
+window.onload = function(){
+
+}	
+</script>
 </body>
+
 </html>
