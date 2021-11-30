@@ -114,7 +114,7 @@ public class LoginServlet extends HttpServlet {
 			httpSession.setAttribute("person", person);
 		    
 			
-			request.setAttribute("menuUrl", "/jsp/user/userInfoList.jsp");
+			request.setAttribute("menuUrl", "/jsp/manager/user/userInfoList.jsp");
 			request.setAttribute("person", person);
 			request.setAttribute("state", state);
 			RequestDispatcher view = request.getRequestDispatcher(dipatcherSource);

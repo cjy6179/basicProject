@@ -8,7 +8,6 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>userList</title>
 </head>
 <script>
 window.onload = function(){	
@@ -24,7 +23,7 @@ window.onload = function(){
 </script>
 <body>
 <!-- Fixed navbar -->
-<jsp:include page="../top.jsp" flush="false" />
+<jsp:include page="../../top.jsp" flush="false" />
 
 <form id="userInfoFrom">
 	<div class="container">
@@ -36,7 +35,6 @@ window.onload = function(){
 	          <table class="table">
 	            <thead>
 	              <tr>
-	              	<th><input type="checkbox"></th>
 	              	<th>#</th>
 	                <th>ID</th>
 	                <th>성명</th>
@@ -50,7 +48,6 @@ List<UserInfoVO> userInfoList = (List<UserInfoVO>)request.getAttribute("userInfo
 for(int i=0; i < userInfoList.size(); i++){
 %>	            
 	              <tr>
-	              	<td><input type="checkbox"></td>
 	              	<td> <%=(int)userInfoList.get(i).getIndex()%> </td>
 	                <td> <%=userInfoList.get(i).getId()%> </td>
 	                <td> <%=userInfoList.get(i).getName()%> </td>

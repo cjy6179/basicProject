@@ -16,6 +16,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+
+import common.user.mybatis.UserMapper;
 import database.DatabaseConnetion;
 import logger.FirstLogger;
 
@@ -45,57 +49,68 @@ public class SelectUserInfoServlet extends HttpServlet {
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 		
 		DatabaseConnetion database = new DatabaseConnetion();
-		Connection conn = database.getDBConnenction();
+//		Connection conn = database.getDBConnenction();
 		
-		String sql = "SELECT @rownum:=@rownum+1, id, name, age, gender FROM T_USER_MST b, (SELECT @ROWNUM:=0) R ";
+//		String sql = "SELECT @rownum:=@rownum+1, id, name, age, gender FROM T_USER_MST b, (SELECT @ROWNUM:=0) R ";
+//		
+//		PreparedStatement pstmt = null;
+//		ResultSet rs = null;
+//		int count = 0;
+//		
+//		List<UserInfoVO> userInfoList = new ArrayList<UserInfoVO>();
+//				
+//				
+//		try {
+//			
+//			pstmt = conn.prepareStatement(sql);
+//			
+//			rs = pstmt.executeQuery();
+//			
+//			while( rs.next() ){
+//				UserInfoVO userInfoVo = new UserInfoVO();
+//				
+//				userInfoVo.setIndex(rs.getInt(1));
+//				userInfoVo.setId(rs.getString(2));
+//				userInfoVo.setName(rs.getString(3));
+//				userInfoVo.setAge(rs.getString(4));
+//				userInfoVo.setGender(rs.getString(5));
+//				
+//				userInfoList.add(userInfoVo);
+//				count++;
+//			}
+//			
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//			logger.log(e.getMessage());
+//		} finally{
+//            try{
+//                if( conn != null && !conn.isClosed()){
+//                    conn.close();
+//                }
+//                if( pstmt != null && !pstmt.isClosed()){
+//                    pstmt.close();
+//                }if( rs != null && !rs.isClosed()){
+//                    rs.close();
+//                }
+//            }
+//            catch( SQLException e){
+//                e.printStackTrace();
+//            }
+//        }
 		
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		int count = 0;
+		SqlSessionFactory sqlSessionFactory = database.getMybitisDBConnenction();
+		List<UserInfoVO> userInfoList = null;
+		try (SqlSession session = sqlSessionFactory.openSession()) {
+//			userInfoList = session.selectList("basicProject.mapper.userInfoMapper.selectUserInfo");
+			userInfoList = session.getMapper(UserMapper.class).selectUser();
+			  
+		}catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e.getMessage());
+		}
 		
-		List<UserInfoVO> userInfoList = new ArrayList<UserInfoVO>();
-				
-				
-		try {
-			
-			pstmt = conn.prepareStatement(sql);
-			
-			rs = pstmt.executeQuery();
-			
-			while( rs.next() ){
-				UserInfoVO userInfoVo = new UserInfoVO();
-				
-				userInfoVo.setIndex(rs.getInt(1));
-				userInfoVo.setId(rs.getString(2));
-				userInfoVo.setName(rs.getString(3));
-				userInfoVo.setAge(rs.getString(4));
-				userInfoVo.setGender(rs.getString(5));
-				
-				userInfoList.add(userInfoVo);
-				count++;
-			}
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			logger.log(e.getMessage());
-		} finally{
-            try{
-                if( conn != null && !conn.isClosed()){
-                    conn.close();
-                }
-                if( pstmt != null && !pstmt.isClosed()){
-                    pstmt.close();
-                }if( rs != null && !rs.isClosed()){
-                    rs.close();
-                }
-            }
-            catch( SQLException e){
-                e.printStackTrace();
-            }
-        }
-		
-		String dipatcherSource = "/jsp/user/userInfoList.jsp";    
+		String dipatcherSource = "/jsp/manager/user/userInfoList.jsp";    
 		request.setAttribute("userInfoList", userInfoList);
 		RequestDispatcher view = request.getRequestDispatcher(dipatcherSource);
 	

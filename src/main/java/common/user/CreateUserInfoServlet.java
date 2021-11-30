@@ -14,6 +14,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+
+import common.user.mybatis.UserMapper;
 import database.DatabaseConnetion;
 
 /**
@@ -53,6 +57,7 @@ public class CreateUserInfoServlet extends HttpServlet {
 		try {
 			
 			String sql =  "insert into T_USER_MST(id, name, age, gender, password) values(?, ?, ?, ?, ?)";
+			
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setString(1, id);

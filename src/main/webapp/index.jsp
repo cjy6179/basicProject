@@ -41,7 +41,7 @@ function enterkey() {
 
 
 function fnCreateUser(){
-	var url = "jsp/user/createUser.jsp";
+	var url = "jsp/manager/user/createUser.jsp";
     var name = "popup test";
     var option = "width = 500, height = 500, top = 100, left = 200, location = no"
     window.open(url, name, option);

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="basicProject.mapper.userInfoMapper">
+  <select id="selectUserInfo" resultType="userInfo">
+    SELECT @rownum:=@rownum+1, id, name, age, gender FROM T_USER_MST b, (SELECT @ROWNUM:=0) R
+  </select>
+</mapper>

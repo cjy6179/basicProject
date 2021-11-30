@@ -32,6 +32,17 @@
         <url-pattern>/selectUserInfo</url-pattern>
     </servlet-mapping>
     
+    
+    
+    <listener>
+    	<listener-class>
+    		config.CustomServletContextListener
+    	</listener-class>
+    </listener>
+    
+    
+   
+    <!-- 삭제예정  -->
     <servlet>
         <servlet-name>MenuMoveServlet</servlet-name>
         <servlet-class>common.MenuMoveServlet</servlet-class>
@@ -40,11 +51,4 @@
         <servlet-name>MenuMoveServlet</servlet-name>
         <url-pattern>/menuMove</url-pattern>
     </servlet-mapping>
-    
-    <listener>
-    	<listener-class>
-    		config.CustomServletContextListener
-    	</listener-class>
-    </listener>
-    
 </web-app>

@@ -34,7 +34,7 @@
            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">관리자 <span class="caret"></span></a>
            <ul class="dropdown-menu" role="menu">
              <li><a href="/basicProject/SelectUserInfoServlet">사용자 관리</a></li>
-             <li><a href="#">공통코드</a></li>
+             <li><a href="/basicProject/SelectItemDefualtList">공통코드</a></li>
              <li><a href="#">Something else here</a></li>
              <li class="divider"></li>
              <li class="dropdown-header">Nav header</li>

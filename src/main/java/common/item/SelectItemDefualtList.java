@@ -1,8 +1,6 @@
-package common;
+package common.item;
 
 import java.io.IOException;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,16 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class MenuMoveServlet
+ * Servlet implementation class SelectItemDefualtList
  */
-@WebServlet("/MenuMoveServlet")
-public class MenuMoveServlet extends HttpServlet {
+@WebServlet("/SelectItemDefualtList")
+public class SelectItemDefualtList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MenuMoveServlet() {
+    public SelectItemDefualtList() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,20 +29,7 @@ public class MenuMoveServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 		
-		String menuId= (String) request.getAttribute("menuId");
-		String menuUrl = "";
-		if("001".equals(menuId)) {
-			menuUrl = "/jsp/manager/user/userInfoList.jsp";
-		}
 		
-		
-		String dipatcherSource = "/jsp/main.jsp";
-		
-		request.setAttribute(menuUrl, menuUrl);
-		
-		RequestDispatcher view = request.getRequestDispatcher(dipatcherSource);
-		
-		view.forward(request, response);
 	}
 
 	/**
